@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Compartilhar Localização</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        button { padding: 10px 20px; background: #4CAF50; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Clique no botão para compartilhar sua localização</h1>
+    <button onclick="getLocation()">Compartilhar Localização</button>
+    <p id="status"></p>
+
+    <script>
+        function getLocation() {
+            const status = document.getElementById("status");
+            status.textContent = "Solicitando permissão...";
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        status.textContent = "Localização obtida! Enviando...";
+
+                        // Substitua pelo SEU E-MAIL ou um serviço que receba os dados
+                        const link = `mailto:uburu321@gmail.com?subject=Localização&body=Latitude: ${lat}, Longitude: ${lng}`;
+                        window.location.href = link;
+                    },
+                    (error) => {
+                        status.textContent = "Erro: " + (error.message || "Permissão negada.");
+                    }
+                );
+            } else {
+                status.textContent = "Seu navegador não suporta geolocalização.";
+            }
+        }
+    </script>
+</body>
+</html>
